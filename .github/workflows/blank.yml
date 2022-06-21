@@ -36,15 +36,17 @@ jobs:
           echo test, and deploy your project.
 
       - name: Job summary (updated)
-        run: |
-          await core.summary
-          .addHeading('Test Results')
-          .addCodeBlock(generateTestResults(), "js")
-          .addTable([
-            [{data: 'File', header: true}, {data: 'Result', header: true}],
-            ['foo.js', 'Pass '],
-            ['bar.js', 'Fail '],
-            ['test.js', 'Pass ']
-          ])
-          .addLink('View staging deployment!', 'https://github.com')
-          .write()
+        uses: actions/github-script@v6.1.0
+        with:
+          script: |
+            await core.summary
+              .addHeading('Test Results')
+              .addCodeBlock(generateTestResults(), "js")
+              .addTable([
+                [{data: 'File', header: true}, {data: 'Result', header: true}],
+                ['foo.js', 'Pass '],
+                ['bar.js', 'Fail '],
+                ['test.js', 'Pass ']
+              ])
+              .addLink('View staging deployment!', 'https://github.com')
+              .write()
