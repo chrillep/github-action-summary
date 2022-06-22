@@ -90,3 +90,42 @@ jobs:
               ])
               .addLink('View staging deployment!', 'https://github.com')
               .write()
+  staging:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+    environment:
+      name: staging
+      url: https://github.com/chrillep/github-action-summary/docs/staging
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v3
+
+      - name: Job summary (updated)
+        uses: actions/github-script@v6.1.0
+        with:
+          script: |
+            await core.summary
+              .addHeading('Test Results $')
+              .addCodeBlock(`generateTestResults()`, "js")
+              .addTable([
+                [{data: 'File', header: true}, {data: 'Result', header: true}],
+                ['foo.js', 'Pass '],
+                ['bar.js', 'Fail '],
+                ['test.js', 'Pass ']
+              ])
+              .addLink('View staging deployment!', 'https://github.com')
+              .write()
+      - name: Dump GitHub context
+        id: github_context_step
+        run: echo '${{ toJSON(github) }}'
+      - name: Dump job context
+        run: echo '${{ toJSON(job) }}'
+      - name: Dump steps context
+        run: echo '${{ toJSON(steps) }}'
+      - name: Dump runner context
+        run: echo '${{ toJSON(runner) }}'
+      - name: Dump strategy context
+        run: echo '${{ toJSON(strategy) }}'
+      - name: Dump matrix context
+        run: echo '${{ toJSON(matrix) }}'
