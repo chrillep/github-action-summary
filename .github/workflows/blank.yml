@@ -94,7 +94,6 @@ jobs:
   staging:
     name: Staging
     runs-on: ubuntu-latest
-    needs: build
     environment:
       name: staging
       url: https://github.com/chrillep/github-action-summary/docs/staging
@@ -125,7 +124,8 @@ jobs:
           script: |
             await core.summary
               .addHeading('GitHub Context')
-              .addCodeBlock(`${{ toJSON(github) }}`, "jssn")
+              .addCodeBlock(`${{ toJSON(github) }}`, "json")
+              .write()
       - name: Dump job context
         run: echo '${{ toJSON(job) }}'
       - name: Dump steps context
