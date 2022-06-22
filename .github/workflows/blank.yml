@@ -120,7 +120,12 @@ jobs:
               .write()
       - name: Dump GitHub context
         id: github_context_step
-        run: echo '${{ toJSON(github) }}'
+        uses: actions/github-script@v6.1.0
+        with:
+          script: |
+            await core.summary
+              .addHeading('GitHub Context')
+              .addCodeBlock(`${{ toJSON(github) }}`, "jssn")
       - name: Dump job context
         run: echo '${{ toJSON(job) }}'
       - name: Dump steps context
