@@ -6,7 +6,7 @@ repo:
 # Add '@domain/core' label to any change within the 'core' package
 "@domain/core":
   - package/core/*
-- package/core/**/*
+  - package/core/**/*
 
 # Add 'test' label to any change to *.spec.js files within the source dir
 test:
@@ -21,4 +21,4 @@ source:
 # the `main.js` hasn't changed
 frontend:
   - any: ['src/**/*.js']
-  all: ['!src/main.js']
+    all: ['!src/main.js']
