@@ -1,0 +1,16 @@
+name: lint
+on: [pull_request]
+jobs:
+  remark-lint:
+    name: runner / remark-lint
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: install remark presets
+        run: npm install remark-preset-lint-recommended remark-toc remark-preset-lint-consistent remark-gfm
+        shell: bash
+      - name: remark-lint
+        uses: reviewdog/action-remark-lint@v5
+        with:
+          reporter: github-pr-check
+          remark_args: "--use=remark-toc --use=remark-gfm --use=remark-preset-lint-consistent --use=remark-preset-lint-recommended"
