@@ -13,18 +13,18 @@ jobs:
         uses: reviewdog/action-remark-lint@v5
         with:
           reporter: github-pr-check
-
-  name: runners / remark-lint
-  runs-on: ubuntu-latest
-  steps:
-    - uses: actions/checkout@v3
-    - name: Check files using the remark-lint linter
-      uses: rickstaa/action-remark-lint@v1
-      id: action_remark_lint
-      with:
-        remark_args: ". -o"
-    - name: Annotate diff changes using reviewdog
-      if: steps.action_remark_lint.outputs.is_formatted == 'true'
-      uses: reviewdog/action-suggester@v1
-      with:
-        tool_name: remarkfmt
+  remark-lints:
+    name: runners / remark-lint
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Check files using the remark-lint linter
+        uses: rickstaa/action-remark-lint@v1
+        id: action_remark_lint
+        with:
+          remark_args: ". -o"
+      - name: Annotate diff changes using reviewdog
+        if: steps.action_remark_lint.outputs.is_formatted == 'true'
+        uses: reviewdog/action-suggester@v1
+        with:
+          tool_name: remarkfmt
