@@ -5,7 +5,7 @@ jobs:
     name: runner / remark-lint
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - name: install remark presets
         run: npm install remark-toc remark-gfm remark-preset-lint-recommended remark-preset-lint-consistent
         shell: bash
